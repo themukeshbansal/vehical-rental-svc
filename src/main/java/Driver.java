@@ -5,6 +5,7 @@ import VehicalRentalService.commands.AddVehicle;
 import VehicalRentalService.commands.Command;
 import VehicalRentalService.exceptions.VehicleRentalCommandExecuteException;
 import VehicalRentalService.exceptions.VehicleRentalCommandParseException;
+import VehicalRentalService.strategy.DefaultFareStrategy;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,7 +30,7 @@ public class Driver {
             filePath = args[0];
         }
         fetchCommandsFromFilePath(commands, filePath);
-        VehicleRental vehicleRental = new VehicleRental();
+        VehicleRental vehicleRental = new VehicleRental(new DefaultFareStrategy());
         executeCommands(vehicleRental, commands);
     }
 

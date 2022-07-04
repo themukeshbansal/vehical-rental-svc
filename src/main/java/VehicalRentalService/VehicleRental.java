@@ -2,6 +2,7 @@ package VehicalRentalService;
 
 import VehicalRentalService.models.Branch;
 import VehicalRentalService.models.Vehicle;
+import VehicalRentalService.strategy.Strategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,8 +12,15 @@ import java.util.Optional;
 public class VehicleRental {
     HashMap<String, Branch> branches;
 
-    public VehicleRental(){
+    public int getFareMultiplier() {
+        return fareStrategy.getStrategicMultiplier(this);
+    }
+
+    Strategy fareStrategy;
+
+    public VehicleRental(Strategy fareStrategy){
         this.branches = new HashMap<>();
+        this.fareStrategy = fareStrategy;
     }
 
     public Optional<Branch> getBranchIfExists(String branchId) {

@@ -5,6 +5,7 @@ import VehicalRentalService.exceptions.VehicleRentalCommandExecuteException;
 import VehicalRentalService.exceptions.VehicleRentalCommandParseException;
 import VehicalRentalService.CommandFactory;
 import VehicalRentalService.VehicleRental;
+import VehicalRentalService.strategy.DefaultFareStrategy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ public class VehicleRentalTest {
     void setUp() {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
-        vehicleRental = new VehicleRental();
+        vehicleRental = new VehicleRental(new DefaultFareStrategy());
     }
 
 

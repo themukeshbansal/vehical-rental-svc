@@ -5,6 +5,7 @@ import VehicalRentalService.VehicleRental;
 import VehicalRentalService.commands.Command;
 import VehicalRentalService.exceptions.VehicleRentalCommandExecuteException;
 import VehicalRentalService.exceptions.VehicleRentalCommandParseException;
+import VehicalRentalService.strategy.DefaultFareStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class CommandExecuteExceptionTest {
 
     @BeforeEach
     void setUp() throws VehicleRentalCommandParseException, VehicleRentalCommandExecuteException {
-        vehicleRental = new VehicleRental();
+        vehicleRental = new VehicleRental(new DefaultFareStrategy());
         commandLine = "ADD_BRANCH B1 CAR,BIKE,VAN";
         executeCommandAndPrintOutput(commandLine);
     }

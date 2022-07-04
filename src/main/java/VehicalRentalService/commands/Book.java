@@ -42,7 +42,7 @@ public class Book implements Command {
         Vehicle vehicle = availableVehicles.stream()
                 .min(Comparator.comparing(v -> v.getFare(startTime, endTime))).orElse(null);
         if (vehicle != null){
-            return String.valueOf(vehicle.bookVehicle(startTime, endTime));
+            return String.valueOf(vehicle.bookVehicle(startTime, endTime) * vehicleRental.getFareMultiplier());
         }
         return "-1";
     }
