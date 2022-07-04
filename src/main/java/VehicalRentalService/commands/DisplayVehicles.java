@@ -33,21 +33,11 @@ public class DisplayVehicles implements Command{
 
     @Override
     public String execute(VehicleRental vehicleRental) {
-        Optional<Branch> branch = vehicleRental.getBranchIfExists(branchId);
-        ArrayList<Vehicle> availableVehicles = new ArrayList<>();
-        if (branch.isPresent()) {
-            HashMap<String, ArrayList<Vehicle>> vehiclesMap = branch.get().getVehicles();
-            for(Map.Entry<String, ArrayList<Vehicle>> entry : vehiclesMap.entrySet()) {
-                ArrayList<Vehicle> vehicles = entry.getValue();
-                for (Vehicle vehicle : vehicles) {
-                    if (vehicle.isAvailableForBooking(startTime, endTime)){
-                        availableVehicles.add(vehicle);
-                    }
-                }
-            }
-        }
+        ArrayList<Vehicle> availableVehicles = vehicleRental.getAvailableVehicles(branchId, startTime, endTime);
         availableVehicles.sort(Comparator.comparing(o -> o.getFare(startTime, endTime)));
-        String availableSortedVehicles = availableVehicles.stream().flatMap(vehicle -> Stream.of(vehicle.getId())).collect(Collectors.joining(","));
+        String availableSortedVehicles = availableVehicles.stream()
+                .flatMap(vehicle -> Stream.of(vehicle.getId()))
+                .collect(Collectors.joining(","));
         return availableSortedVehicles;
     }
 }

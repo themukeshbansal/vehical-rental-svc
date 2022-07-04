@@ -40,7 +40,7 @@ public class CommandExecuteExceptionTest {
         Exception exception = assertThrows(VehicleRentalCommandExecuteException.class, () -> {
             executeCommandAndPrintOutput(commandLine);
         });
-        String expectedMessage = "Vehicle type does not exist";
+        String expectedMessage = "FALSE";
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }

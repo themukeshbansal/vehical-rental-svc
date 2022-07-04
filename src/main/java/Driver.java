@@ -67,11 +67,7 @@ public class Driver {
             try {
                 commandOutput = command.execute(vehicleRental);
             } catch (VehicleRentalCommandExecuteException e) {
-                if (command instanceof AddVehicle || command instanceof AddBranch) {
-                    System.out.println("FALSE");
-                } else {
-                    System.out.println("-1");
-                }
+                    System.out.println(e.getMessage());
                 continue;
             }
             System.out.println(commandOutput);

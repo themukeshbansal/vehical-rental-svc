@@ -6,6 +6,7 @@ import VehicalRentalService.models.Branch;
 import VehicalRentalService.models.Vehicle;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -37,25 +38,9 @@ public class Book implements Command {
 
     @Override
     public String execute(VehicleRental vehicleRental) {
-        Optional<Branch> branch = vehicleRental.getBranchIfExists(branchId);
-        HashMap<String, Vehicle> availableVehicles = new HashMap<>();
-        int minFare = Integer.MAX_VALUE;
-        String minFareVehicle = "";
-
-        if (branch.isPresent() && branch.get().getVehicles().containsKey(vehicleType)) {
-            ArrayList<Vehicle> vehicles = branch.get().getVehicles().get(vehicleType);
-            for (Vehicle vehicle : vehicles) {
-                if (vehicle.isAvailableForBooking(startTime, endTime)){
-                    int calculatedFare = vehicle.getFare(startTime, endTime);
-                    if (calculatedFare < minFare){
-                        minFare = calculatedFare;
-                        minFareVehicle = vehicle.getId();
-                    }
-                    availableVehicles.put(vehicle.getId(), vehicle);
-                }
-            }
-        }
-        Vehicle vehicle = availableVehicles.get(minFareVehicle);
+        ArrayList<Vehicle> availableVehicles = vehicleRental.getAvailableVehiclesOfType(branchId, vehicleType, startTime, endTime);
+        Vehicle vehicle = availableVehicles.stream()
+                .min(Comparator.comparing(v -> v.getFare(startTime, endTime))).orElse(null);
         if (vehicle != null){
             return String.valueOf(vehicle.bookVehicle(startTime, endTime));
         }

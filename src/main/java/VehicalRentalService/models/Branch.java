@@ -32,7 +32,7 @@ public class Branch {
                 branchVehiclesOfType.add(vehicle);
             }
         } else {
-            throw new VehicleRentalCommandExecuteException("Vehicle type does not exist");
+            throw new VehicleRentalCommandExecuteException("FALSE");
         }
     }
 
